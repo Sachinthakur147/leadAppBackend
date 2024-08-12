@@ -7,12 +7,19 @@ var http = require('http');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: 'https://main.d1cphhkvwl4tx8.amplifyapp.com',
+    methods: 'GET,POST,PUT,DELETE',
+    allowedHeaders: 'Content-Type,Authorization'
+  }));
 app.use(bodyParser.json());
 
 connectDB();
 
 app.use('/api', leadRoutes);
+app.get('/', (req, res) => {
+    res.send('A Monk in Cloud');
+});
 
 const PORT = process.env.PORT || 5000;
 const server = http.createServer(app);
@@ -20,5 +27,8 @@ const server = http.createServer(app);
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
+
+
 
 
